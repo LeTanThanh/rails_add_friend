@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Hello <%= current_user.name %></h2>
-  <p>Let's make friends</p>
+  <p>Let's add friends or <%= link_to "View profile", current_user %></p>
 
   <table class="table">
     <thead>
@@ -16,7 +16,13 @@
         <tr>
           <td><%= user.id %></td>
           <td><%= user.name %></td>
-          <td><%= link_to "Add Friend", "#" %></td>
+          <td>
+            <% if friend_relation = current_user.decorate.friend_relation_with(user) %>
+              <%= link_to "Remove Friend", friend_relation_path(friend_relation), method: :delete %>
+            <% else %>
+              <%= link_to "Add Friend", friend_relations_path(friend_id: user.id), method: :post %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

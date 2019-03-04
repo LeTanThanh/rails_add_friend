@@ -1,0 +1,56 @@
+<div class="container">
+  <h2>Hello <%= current_user.name %></h2>
+  <p>Let's add friends or <%= link_to "View user list", root_path %></p>
+
+  <% if @friends.any? %>
+    <h3>Friendships added by you</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Friend Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @friends.each do |friend| %>
+          <tr>
+            <td><%= friend.id %></td>
+            <td><%= friend.name %></td>
+            <td>
+              <% friend_relation = current_user.decorate.friend_relation_with(friend) %>
+              <%= link_to "Remove Friend", friend_relation_path(friend_relation), method: :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% if @reverse_friends.any? %>
+    <h3>Friendships added by your friends</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Friend Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @reverse_friends.each do |reverse_friend| %>
+          <tr>
+            <td><%= reverse_friend.id %></td>
+            <td><%= reverse_friend.name %></td>
+            <td>
+              <% friend_relation = current_user.decorate.friend_relation_with(reverse_friend) %>
+              <%= link_to "Remove Friend", friend_relation_path(friend_relation), method: :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
