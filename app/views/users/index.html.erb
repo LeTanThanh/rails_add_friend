@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Hello <%= current_user.name %></h2>
+  <p>Let's make friends</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Friend Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= link_to "Add Friend", "#" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
